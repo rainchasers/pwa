@@ -1,3 +1,5 @@
+// use separate firebase imports to reduce bundle
+// size and avoid https://github.com/firebase/firebase-js-sdk/issues/1516
 import firebase from "@firebase/app";
 import "@firebase/auth";
 
