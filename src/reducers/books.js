@@ -8,12 +8,10 @@
  * subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
  */
 
-import { createSelector } from 'reselect';
-import {
-  REQUEST_BOOKS, RECEIVE_BOOKS, FAIL_BOOKS,
-} from '../actions/books.js';
+import { createSelector } from "reselect";
+import { REQUEST_BOOKS, RECEIVE_BOOKS, FAIL_BOOKS } from "../actions/books.js";
 
-export const books = (state = {query: null}, action) => {
+export const books = (state = { query: null }, action) => {
   switch (action.type) {
     case REQUEST_BOOKS:
       return {
@@ -27,9 +25,9 @@ export const books = (state = {query: null}, action) => {
       return {
         ...state,
         items: action.items.reduce((obj, item) => {
-            obj[item.id] = item;
-            return obj;
-          }, {}),
+          obj[item.objectID] = item;
+          return obj;
+        }, {}),
         failure: false,
         isFetching: false
       };
@@ -43,13 +41,15 @@ export const books = (state = {query: null}, action) => {
     default:
       return state;
   }
-}
+};
 
 export const itemsSelector = state => state.books && state.books.items;
 
 export const itemListSelector = createSelector(
   itemsSelector,
-  (items) => {
-    return items ? Object.keys(items).map(key => items[key]) : [{},{},{},{},{}];
+  items => {
+    return items
+      ? Object.keys(items).map(key => items[key])
+      : [{}, {}, {}, {}, {}];
   }
 );
