@@ -1,8 +1,5 @@
 import { LitElement, html, css } from "lit-element";
 
-import "./book-image.js";
-import "./book-rating.js";
-
 class BookItem extends LitElement {
   static get styles() {
     return [
@@ -54,17 +51,6 @@ class BookItem extends LitElement {
           height: 40px;
         }
 
-        book-image {
-          width: 96px;
-          pointer-events: none;
-        }
-
-        book-image::before {
-          content: "";
-          display: block;
-          padding-top: 160%;
-        }
-
         .info-section {
           display: flex;
           flex-direction: column;
@@ -88,10 +74,6 @@ class BookItem extends LitElement {
           font-weight: 500;
           letter-spacing: 0.1px;
           line-height: 1.2;
-        }
-
-        .author {
-          line-height: 1.4;
         }
 
         .info-item {
@@ -177,10 +159,6 @@ class BookItem extends LitElement {
             margin: 8px 16px;
           }
 
-          book-image {
-            width: 128px;
-          }
-
           .title {
             font-size: 20px;
           }
@@ -228,17 +206,17 @@ class BookItem extends LitElement {
 
   render() {
     const { item } = this;
-    const isInfo = item && item.objectID;
-    const slug = isInfo ? item.slug : "";
-    const title = isInfo ? item.section : "";
-    const subtitle = isInfo
+    const isLoaded = item && item.objectID;
+    const slug = isLoaded ? item.slug : "";
+    const title = isLoaded ? item.section : "";
+    const subtitle = isLoaded
       ? item.km + "km of " + item.grade + " · " + item.river
       : "";
-    const level = isInfo
-      ? item.level_label + " (" + item.level_reason + ")"
-      : ""; // TODO make this a custom element in it's own right
-    const thumbnail = null; // bring this back later
-    const desc = isInfo ? item.desc : "";
+    const level =
+      isLoaded && item.level_label
+        ? item.level_label + " (" + item.level_reason + ")"
+        : ""; // TODO make this a custom element in it's own right
+    const desc = isLoaded ? item.desc : "";
 
     return html`
       <a href="/detail/${slug}">
@@ -248,10 +226,10 @@ class BookItem extends LitElement {
               <h2 class="title">${title}</h2>
               <slot></slot>
             </div>
-            <div class="author info-item" ?hidden="${!subtitle}">
+            <div class="info-item" ?hidden="${!subtitle}">
               ${subtitle}
             </div>
-            <div class="info-item" ?hidden="true">
+            <div class="info-item" ?hidden="${!level}">
               ${level}
             </div>
           </div>
@@ -259,7 +237,7 @@ class BookItem extends LitElement {
         <div class="desc">${desc}</div>
       </a>
 
-      <div class="placeholder" ?fadeout="${isInfo}">
+      <div class="placeholder" ?fadeout="${isLoaded}">
         <div class="placeholder-info">
           <div class="placeholder-info-inner-1"></div>
           <div class="placeholder-info-inner-2"></div>
