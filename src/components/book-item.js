@@ -229,25 +229,30 @@ class BookItem extends LitElement {
   render() {
     const { item } = this;
     const isInfo = item && item.objectID;
-    const id = isInfo ? item.objectID : "";
-    const title = isInfo ? item.section_name : "";
-    const author = isInfo ? item.river_name + " · " + item.grade : "";
+    const slug = isInfo ? item.slug : "";
+    const title = isInfo ? item.section : "";
+    const subtitle = isInfo
+      ? item.km + "km of " + item.grade + " · " + item.river
+      : "";
+    const level = isInfo
+      ? item.level_label + " (" + item.level_reason + ")"
+      : ""; // TODO make this a custom element in it's own right
     const thumbnail = null; // bring this back later
-    const desc = isInfo ? item.description : "";
+    const desc = isInfo ? item.desc : "";
 
     return html`
-      <a href="/detail/${id}">
+      <a href="/detail/${slug}">
         <div class="info">
           <div class="info-section">
             <div class="title-container">
               <h2 class="title">${title}</h2>
               <slot></slot>
             </div>
-            <div class="author info-item" ?hidden="${!author}">
-              ${author}
+            <div class="author info-item" ?hidden="${!subtitle}">
+              ${subtitle}
             </div>
             <div class="info-item" ?hidden="true">
-              <book-rating .rating=""></book-rating>
+              ${level}
             </div>
           </div>
         </div>
