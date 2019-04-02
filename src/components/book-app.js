@@ -68,8 +68,10 @@ class BookApp extends connect(store)(LitElement) {
         }
 
         .toolbar-bottom {
-          justify-content: center;
           background-color: var(--app-background-color);
+          padding-left: 8px;
+          padding-right: 8px;
+          justify-content: center;
         }
 
         [main-title] > a {
@@ -91,6 +93,7 @@ class BookApp extends connect(store)(LitElement) {
 
         book-input-decorator {
           max-width: 460px;
+          flex-grow: 1;
           transform: translate3d(0, 374px, 0);
         }
 
