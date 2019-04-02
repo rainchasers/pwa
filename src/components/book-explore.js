@@ -1,13 +1,3 @@
-/**
-@license
-Copyright (c) 2018 The Polymer Project Authors. All rights reserved.
-This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
-The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
-The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
-Code distributed by Google as part of the polymer project is also
-subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
-*/
-
 import { html, css } from "lit-element";
 import { PageViewElement } from "./page-view-element.js";
 import { repeat } from "lit-html/directives/repeat.js";
@@ -41,32 +31,14 @@ class BookExplore extends connect(store)(PageViewElement) {
         .books {
           max-width: 432px;
           margin: 0 auto;
-          padding: 8px;
-          box-sizing: border-box;
-          /* remove margin between inline-block nodes */
-          font-size: 0;
+          padding: 0 8px;
         }
 
         li {
-          display: inline-block;
-          position: relative;
-          width: calc(100% - 16px);
-          max-width: 400px;
-          min-height: 240px;
-          margin: 8px;
-          font-size: 14px;
-          vertical-align: top;
-          background: #fff;
-          border-radius: 2px;
-          box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14),
-            0 1px 5px 0 rgba(0, 0, 0, 0.12), 0 3px 1px -2px rgba(0, 0, 0, 0.2);
           list-style: none;
-        }
-
-        li::after {
-          content: "";
-          display: block;
-          padding-top: 65%;
+          margin: 0;
+          padding: 0;
+          margin-bottom: 8px;
         }
 
         .books-bg {
@@ -86,10 +58,6 @@ class BookExplore extends connect(store)(PageViewElement) {
 
         /* Wide Layout */
         @media (min-width: 648px) {
-          li {
-            height: 364px;
-          }
-
           .books-desc {
             padding: 96px 16px 0;
           }
@@ -110,8 +78,8 @@ class BookExplore extends connect(store)(PageViewElement) {
   render() {
     const { _query, _items, _showOffline } = this;
     updateMetadata({
-      title: `${_query ? `${_query} - ` : ""}Books`,
-      description: "Search for books"
+      title: `${_query ? `${_query} - ` : ""}Rivers`,
+      description: "Search for rivers"
     });
 
     return html`
