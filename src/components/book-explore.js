@@ -4,7 +4,6 @@ import { repeat } from "lit-html/directives/repeat.js";
 import { connect } from "pwa-helpers/connect-mixin.js";
 import { updateMetadata } from "pwa-helpers/metadata.js";
 
-import "./book-image.js";
 import "./book-item.js";
 import "./book-offline.js";
 
@@ -28,8 +27,8 @@ class BookExplore extends connect(store)(PageViewElement) {
           display: block;
         }
 
-        .books {
-          max-width: 432px;
+        ul {
+          max-width: 600px;
           margin: 0 auto;
           padding: 0 8px;
         }
@@ -41,35 +40,19 @@ class BookExplore extends connect(store)(PageViewElement) {
           margin-bottom: 8px;
         }
 
-        .books-bg {
-          height: 300px;
-          max-width: 570px;
-          margin: 0 auto;
+        img {
+          display: block;
+          max-width: 200px;
+          margin: 16px auto;
         }
 
-        .books-desc {
+        .tagline {
           padding: 24px 16px 0;
           text-align: center;
         }
 
         [hidden] {
           display: none !important;
-        }
-
-        /* Wide Layout */
-        @media (min-width: 648px) {
-          .books-desc {
-            padding: 96px 16px 0;
-          }
-        }
-
-        /* Wider layout: 2 columns */
-        @media (min-width: 872px) {
-          .books {
-            width: 832px;
-            max-width: none;
-            padding: 16px 0;
-          }
         }
       `
     ];
@@ -84,7 +67,7 @@ class BookExplore extends connect(store)(PageViewElement) {
 
     return html`
       <section ?hidden="${_showOffline}">
-        <ul class="books" ?hidden="${!_query}">
+        <ul ?hidden="${!_query}">
           ${repeat(
             _items,
             item => html`
@@ -95,18 +78,13 @@ class BookExplore extends connect(store)(PageViewElement) {
           )}
         </ul>
 
-        <book-image
-          class="books-bg"
-          alt="Books Home"
-          center
-          src="images/books-bg.jpg"
-          ?hidden="${_query}"
-          placeholder="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAQAAAACCAIAAADwyuo0AAAAI0lEQVR4AWPw2v7Wfe1Dj7X3/Pd8YPDf+Uqva79x38GQvW8Bu0sOexptskUAAAAASUVORK5CYII="
-        ></book-image>
+        <img
+          src="images/logo.svg"
+          ?hidden="${_query}"></img>
 
-        <div class="books-desc" ?hidden="${_query}">
-          Search the world's most comprehensive index of full-text books.
-        </div>
+        <p class="tagline" ?hidden="${_query}">
+          Search a collection of UK whitewater river guides for kayaking and canoeing.
+        </p>
       </section>
 
       <book-offline
