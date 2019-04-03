@@ -2,6 +2,8 @@
 // size and avoid https://github.com/firebase/firebase-js-sdk/issues/1516
 import firebase from "@firebase/app";
 import "@firebase/auth";
+import "@firebase/firestore";
+// TODO: configure persistent data
 
 export const SET_USER = "SET_USER";
 
