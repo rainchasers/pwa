@@ -8,6 +8,10 @@ class BookItem extends LitElement {
           display: block;
         }
 
+        [hidden] {
+          display: none !important;
+        }
+
         div {
           display: block;
           border: solid 1px rgba(0, 0, 0, 0.13);
@@ -23,10 +27,6 @@ class BookItem extends LitElement {
         p.meta {
           color: #006621;
           margin: 0;
-        }
-
-        [hidden] {
-          display: none !important;
         }
 
         p.level {

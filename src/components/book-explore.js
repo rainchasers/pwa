@@ -21,41 +21,39 @@ store.addReducers({
 
 class BookExplore extends connect(store)(PageViewElement) {
   static get styles() {
-    return [
-      css`
-        :host {
-          display: block;
-        }
+    return css`
+      :host {
+        display: block;
+      }
 
-        ul {
-          max-width: 600px;
-          margin: 0 auto;
-          padding: 0 8px;
-        }
+      ul {
+        max-width: 600px;
+        margin: 0 auto;
+        padding: 0 8px;
+      }
 
-        li {
-          list-style: none;
-          margin: 0;
-          padding: 0;
-          margin-bottom: 8px;
-        }
+      li {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+        margin-bottom: 8px;
+      }
 
-        img {
-          display: block;
-          max-width: 200px;
-          margin: 16px auto;
-        }
+      img {
+        display: block;
+        max-width: 200px;
+        margin: 16px auto;
+      }
 
-        .tagline {
-          padding: 24px 16px 0;
-          text-align: center;
-        }
+      .tagline {
+        padding: 24px 16px 0;
+        text-align: center;
+      }
 
-        [hidden] {
-          display: none !important;
-        }
-      `
-    ];
+      [hidden] {
+        display: none !important;
+      }
+    `;
   }
 
   render() {
