@@ -23,29 +23,11 @@ store.addReducers({
 
 class BookDetail extends connect(store)(PageViewElement) {
   static get styles() {
+    // TODO: I have no idea why this does not render correctly.
+    //       Need to fix, and move inline styles into this block
     return css`
-      :host {
-        display: block;
-      }
-
       section {
-        padding: 8px;
-      }
-
-      p.meta {
-        color: #006621;
-        margin: 0;
-      }
-
-      p.level {
-        display: inline-block;
-        margin: 4px 0 0 0;
-        padding: 4px;
-        border-radius: 4px;
-      }
-
-      [hidden] {
-        display: none !important;
+        border: 5px solid red;
       }
     `;
   }
@@ -81,10 +63,49 @@ class BookDetail extends connect(store)(PageViewElement) {
     });
 
     return html`
+      <style>
+        :host {
+          display: block;
+        }
+
+        h1 {
+          font-size: 24px;
+          padding: 0 8px;
+        }
+
+        section {
+          padding: 8px;
+        }
+
+        section:nth-child(odd) {
+          background-color: rgba(0, 0, 0, 0.05);
+        }
+
+        p.meta {
+          color: #006621;
+          margin: 0;
+        }
+
+        p.level {
+          display: inline-block;
+          margin: 4px 0 0 0;
+          padding: 4px;
+          border-radius: 4px;
+        }
+
+        [hidden] {
+          display: none !important;
+        }
+      </style>
+
+      <h1>${title}</h1>
+
       <section ?hidden="${_showOffline}">
-        <h2>${title}</h2>
-        <p>${river}</p>
+        <p class="meta">${river}</p>
         <p class="meta">${km}km of grade ${grade}</p>
+      </section>
+
+      <section>
         <p>${desc}</p>
       </section>
 
