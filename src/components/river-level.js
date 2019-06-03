@@ -1,10 +1,29 @@
 import { LitElement, html, css } from "lit-element";
 
+function relativeTimeInWords(timestamp) {
+  const msPerMinute = 60 * 1000;
+  const msPerHour = msPerMinute * 60;
+  const msPerDay = msPerHour * 24;
+  const elapsed = Date.now() - timestamp.getTime();
+
+  if (elapsed < 5 * msPerMinute) {
+    return "a few minutes ago";
+  } else if (elapsed < msPerHour) {
+    return Math.round(elapsed / msPerMinute) + " minutes ago";
+  } else if (elapsed < msPerDay) {
+    const hourPlural = Math.round(elapsed / msPerHour) > 1 ? "s" : "";
+    return Math.round(elapsed / msPerHour) + " hour" + hourPlural + " ago";
+  }
+  const dayPlural = Math.round(elapsed / msPerDay) > 1 ? "s" : "";
+  return Math.round(elapsed / msPerDay) + " day" + dayPlural + " ago";
+}
+
 class RiverLevel extends LitElement {
   static get properties() {
     return {
       label: { type: String },
-      reason: { type: String }
+      reason: { type: String },
+      timestamp: { type: String }
     };
   }
 
@@ -12,24 +31,20 @@ class RiverLevel extends LitElement {
     super();
     this.label = "unknown";
     this.reason = "";
+    this.timestamp = Date.now();
   }
 
   static get styles() {
+    // TODO: refactor styles into this method
     return css`
       :host {
         display: block;
-      }
-
-      span {
-        display: inline-block;
-        padding: 4px;
-        border-radius: 4px;
       }
     `;
   }
 
   render() {
-    const { label, reason } = this;
+    const { label, reason, timestamp } = this;
 
     let color = "";
     switch (label) {
@@ -54,18 +69,31 @@ class RiverLevel extends LitElement {
         break;
       default:
         // render nothing if no level
-        return;
+        return html``;
     }
 
-    const desc = label + " (" + reason + ")";
+    const relativeTime = relativeTimeInWords(new Date(timestamp));
 
     return html`
       <style>
-        span {
+        p {
           background-color: ${color};
         }
+
+        p {
+          display: block;
+          padding: 8px;
+          margin: 0;
+        }
+
+        span {
+          display: block;
+        }
       </style>
-      <span>${desc}</span>
+      <p>
+        <span>${label} ${relativeTime}</span>
+        <span>${reason}</span>
+      </p>
     `;
   }
 }

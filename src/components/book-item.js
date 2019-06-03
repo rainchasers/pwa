@@ -17,7 +17,7 @@ class BookItem extends LitElement {
           display: block;
           border: solid 1px rgba(0, 0, 0, 0.13);
           border-radius: 8px;
-          padding: 8px;
+          padding: 8px 0;
         }
 
         h2 {
@@ -25,9 +25,17 @@ class BookItem extends LitElement {
           margin: 8px 0 4px 0;
         }
 
+        h2,
+        p {
+          padding: 0 8px;
+        }
+
+        p {
+          margin: 4px 0;
+        }
+
         p.meta {
           color: #006621;
-          margin: 0;
         }
       `
     ];
@@ -57,6 +65,7 @@ class BookItem extends LitElement {
         <river-level
           .label=${item.level_label}
           .reason=${item.level_reason}
+          .timestamp=${item.level_timestamp}
         ></river-level>
         <p class="desc">${desc}</p>
       </div>
