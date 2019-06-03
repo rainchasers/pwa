@@ -5,6 +5,7 @@ import { updateMetadata } from "pwa-helpers/metadata.js";
 
 import { favoriteIcon, favoriteBorderIcon } from "./book-icons.js";
 import "./book-offline.js";
+import "./river-level.js";
 
 // This element is connected to the redux store.
 import { store } from "../store.js";
@@ -56,6 +57,8 @@ class BookDetail extends connect(store)(PageViewElement) {
     const desc = section ? section.desc : "";
     const directions = section ? section.directions : "";
     const isFavorite = _favorites && !!_favorites[uuid];
+    const level = _item.level || {};
+    console.log(level);
 
     updateMetadata({
       title: `${title} · ${river}`,
@@ -103,6 +106,11 @@ class BookDetail extends connect(store)(PageViewElement) {
       <section ?hidden="${_showOffline}">
         <p class="meta">${river}</p>
         <p class="meta">${km}km of grade ${grade}</p>
+        <river-level
+          .label=${level.label}
+          .reason=${level.reason}
+          .timestamp=${level.timestamp}
+        ></river-level>
       </section>
 
       <section>

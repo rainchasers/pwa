@@ -1,6 +1,10 @@
 import { LitElement, html, css } from "lit-element";
 
 function relativeTimeInWords(timestamp) {
+  if (!(timestamp instanceof Date)) {
+    return "unknown time ago";
+  }
+
   const msPerMinute = 60 * 1000;
   const msPerHour = msPerMinute * 60;
   const msPerDay = msPerHour * 24;
@@ -23,7 +27,7 @@ class RiverLevel extends LitElement {
     return {
       label: { type: String },
       reason: { type: String },
-      timestamp: { type: String }
+      timestamp: { type: Date }
     };
   }
 
@@ -31,7 +35,7 @@ class RiverLevel extends LitElement {
     super();
     this.label = "unknown";
     this.reason = "";
-    this.timestamp = Date.now();
+    this.timestamp = new Date();
   }
 
   static get styles() {
@@ -72,7 +76,7 @@ class RiverLevel extends LitElement {
         return html``;
     }
 
-    const relativeTime = relativeTimeInWords(new Date(timestamp));
+    const relativeTime = relativeTimeInWords(timestamp);
 
     return html`
       <style>

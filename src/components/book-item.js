@@ -58,14 +58,21 @@ class BookItem extends LitElement {
       desc = desc ? desc + "." : "";
     }
 
+    const timestamp =
+      isLoaded && item.level_timestamp
+        ? new Date(item.level_timestamp)
+        : new Date();
+    const label = isLoaded ? item.level_label : "";
+    const reason = isLoaded ? item.level_reason : "";
+
     return html`
       <div>
         <h2><a href="/detail/${slug}">${title}</a></h2>
         <p class="meta" ?hidden="${!subtitle}">${subtitle}</p>
         <river-level
-          .label=${item.level_label}
-          .reason=${item.level_reason}
-          .timestamp=${item.level_timestamp}
+          .label=${label}
+          .reason=${reason}
+          .timestamp=${timestamp}
         ></river-level>
         <p class="desc">${desc}</p>
       </div>
