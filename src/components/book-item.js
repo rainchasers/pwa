@@ -1,4 +1,5 @@
 import { LitElement, html, css } from "lit-element";
+import "./river-level.js";
 
 class BookItem extends LitElement {
   static get styles() {
@@ -28,33 +29,6 @@ class BookItem extends LitElement {
           color: #006621;
           margin: 0;
         }
-
-        p.level {
-          display: inline-block;
-          margin: 4px 0 0 0;
-          padding: 4px;
-          border-radius: 4px;
-        }
-
-        .toohigh,
-        .empty {
-          background-color: #ffbaba;
-        }
-        .huge {
-          background-color: #e0d6df;
-        }
-        .high {
-          background-color: #c7e09d;
-        }
-        .medium {
-          background-color: #dff2bf;
-        }
-        .low {
-          background-color: #fff5bf;
-        }
-        .scrape {
-          background-color: #ffd4c5;
-        }
       `
     ];
   }
@@ -67,12 +41,6 @@ class BookItem extends LitElement {
     const subtitle = isLoaded
       ? item.km + "km of grade " + item.grade + " · " + item.river
       : "";
-    const level_class =
-      isLoaded && item.level_label != "unknown" ? item.level_label : "";
-    const level =
-      isLoaded && item.level_label
-        ? item.level_label + " (" + item.level_reason + ")"
-        : ""; // TODO make this a custom element in it's own right
 
     // if desc is present, extract the first sentence
     let desc = "";
@@ -86,7 +54,10 @@ class BookItem extends LitElement {
       <div>
         <h2><a href="/detail/${slug}">${title}</a></h2>
         <p class="meta" ?hidden="${!subtitle}">${subtitle}</p>
-        <p class="level ${level_class}" ?hidden="${!level_class}">${level}</p>
+        <river-level
+          .label=${item.level_label}
+          .reason=${item.level_reason}
+        ></river-level>
         <p class="desc">${desc}</p>
       </div>
     `;
