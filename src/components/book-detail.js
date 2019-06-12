@@ -57,8 +57,12 @@ class BookDetail extends connect(store)(PageViewElement) {
     const desc = section ? section.desc : "";
     const directions = section ? section.directions : "";
     const isFavorite = _favorites && !!_favorites[uuid];
-    const level = _item.level || {};
-    console.log(level);
+    let level = _item.level || {};
+    if (level.event_time && typeof level.event_time.toDate == "function") {
+      // convert firebase Timestamp object to vanilla JS date
+      // https://firebase.google.com/docs/reference/android/com/google/firebase/Timestamp.html
+      level.event_time = level.event_time.toDate();
+    }
 
     updateMetadata({
       title: `${title} · ${river}`,
@@ -80,7 +84,7 @@ class BookDetail extends connect(store)(PageViewElement) {
           padding: 8px;
         }
 
-        section:nth-child(odd) {
+        section.highlight {
           background-color: rgba(0, 0, 0, 0.05);
         }
 
@@ -103,24 +107,27 @@ class BookDetail extends connect(store)(PageViewElement) {
 
       <h1>${title}</h1>
 
-      <section ?hidden="${_showOffline}">
-        <p class="meta">${river}</p>
-        <p class="meta">${km}km of grade ${grade}</p>
+      <div ?hidden="${_showOffline}">
+        <section class="highlight">
+          <p class="meta">${river}</p>
+          <p class="meta">${km}km of grade ${grade}</p>
+        </section>
+
         <river-level
           .label=${level.label}
           .reason=${level.reason}
-          .timestamp=${level.timestamp}
+          .timestamp=${level.event_time}
         ></river-level>
-      </section>
 
-      <section>
-        <p>${desc}</p>
-      </section>
+        <section>
+          <p>${desc}</p>
+        </section>
 
-      <section ?hidden="${_showOffline}">
-        <p>TODO: insert putin/takeout maps</p>
-        <p>${directions}</p>
-      </section>
+        <section class="highlight">
+          <p>TODO: insert putin/takeout maps</p>
+          <p>${directions}</p>
+        </section>
+      </div>
 
       <div
         class="fav-btn-container"
